@@ -6,7 +6,7 @@ namespace Pastebin.Domain.Exceptions
 	{
 		public override int StatusCode => (int)HttpStatusCode.BadRequest;
 
-		protected BadRequestException(string? message = "BadRequest", Exception? innerException = null)
+		public BadRequestException(string? message = "BadRequest", Exception? innerException = null)
 			: base(message, innerException)
 		{
 		}
