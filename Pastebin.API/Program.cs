@@ -15,6 +15,8 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
