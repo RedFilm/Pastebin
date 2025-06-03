@@ -1,4 +1,5 @@
-﻿using Pastebin.Domain.DbEntities;
+﻿using Microsoft.EntityFrameworkCore;
+using Pastebin.Domain.DbEntities;
 using Pastebin.Domain.Interfaces.Repository;
 
 namespace Pastebin.Persistence.Repository
@@ -40,5 +41,13 @@ namespace Pastebin.Persistence.Repository
 			_context.Pastes.Update(paste);
 			return await _context.SaveChangesAsync() > 0;
 		}
+
+		public async Task<Paste?> GetByUrlHashAsync(string urlHash)
+		{
+			return await _context.Pastes.FirstOrDefaultAsync(p => p.UrlHash == urlHash);
+		}
+
+		public async Task<bool> AnyAsync(string urlHash) => 
+			await _context.Pastes.AnyAsync(p => p.UrlHash == urlHash);
 	}
 }

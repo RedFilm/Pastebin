@@ -12,7 +12,14 @@ namespace Pastebin.Domain.Interfaces.Repository
 		public Task<Paste?> GetByIdAsync(long id);
 
 		/// <summary>
-		/// Сохранение нового поста.
+		/// Получение поста по его url hash.
+		/// </summary>
+		/// <param name="urlHash"></param>
+		/// <returns></returns>
+		public Task<Paste?> GetByUrlHashAsync(string urlHash);
+
+		/// <summary>
+		/// Создание поста.
 		/// </summary>
 		/// <param name="paste"></param>
 		/// <returns></returns>
@@ -31,5 +38,13 @@ namespace Pastebin.Domain.Interfaces.Repository
 		/// <param name="id"></param>
 		/// <returns></returns>
 		public Task<bool> DeleteAsync(long id);
+
+
+		/// <summary>
+		/// Проверка на наличие поста с указанным url hash.
+		/// </summary>
+		/// <param name="urlHash"></param>
+		/// <returns></returns>
+		public Task<bool> AnyAsync(string urlHash);
 	}
 }
