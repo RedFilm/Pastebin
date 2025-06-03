@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Pastebin.Application.CQRS.Commands;
+using Pastebin.Domain.Exceptions;
 using Pastebin.Domain.Interfaces.Repository;
 
 namespace Pastebin.Application.CQRS.Handlers
@@ -15,13 +16,14 @@ namespace Pastebin.Application.CQRS.Handlers
 		{
 			var paste = await _repository.GetByIdAsync(command.Id);
 
-			// TODO: custom exceptions
-			//if (paste == null) throw new NotFoundException("Paste not found");
+			if (paste is null) 
+				throw new NotFoundException(command.Id);
 
-			//if (paste.AuthorId != command.AuthorId)
-				//throw new ForbiddenException("You can't delete this paste");
+			if (paste.UserId != command.AuthorId)
+				throw new ForbiddenException("Permission denied.");
 
 			await _repository.DeleteAsync(command.Id);
+
 			return Unit.Value;
 		}
 	}

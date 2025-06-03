@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Pastebin.Application.CQRS.Commands;
+using Pastebin.Domain.Exceptions;
 using Pastebin.Domain.Interfaces.Repository;
 
 namespace Pastebin.Application.CQRS.Handlers
@@ -15,12 +16,13 @@ namespace Pastebin.Application.CQRS.Handlers
 		{
 			var paste = await _repository.GetByIdAsync(command.Id);
 
-			// TODO: custom exceptions
-			//if (paste == null) throw new NotFoundException("Paste not found");
+			if (paste is null)
+				throw new NotFoundException("Paste not found.");
 
-			//if (paste.UserId != command.AuthorId)
-				//throw new ForbiddenException("You can't edit this paste");
+			if (paste.UserId != command.AuthorId)
+				throw new ForbiddenException("Permission denied.");
 
+			// TODO: change life time concept
 			paste.ExpirationDate.AddDays(command.LifeTime.Day);
 
 			await _repository.UpdateAsync(paste);

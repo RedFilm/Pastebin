@@ -3,5 +3,5 @@ using Pastebin.Domain.DbEntities;
 
 namespace Pastebin.Application.CQRS.Queries
 {
-	public record GetPasteByIdQuery(long Id) : IRequest<Paste>;
+	public record GetPasteByUrlHashQuery(string Hash) : IRequest<Paste>;
 }
