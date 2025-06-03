@@ -1,3 +1,4 @@
+using Pastebin.API.Handlers;
 using Pastebin.Application.CQRS.Commands;
 using Pastebin.Persistence.DependencyInjection;
 
@@ -11,11 +12,18 @@ builder.Services
 builder.Services.AddMediatR(cfg =>
 	cfg.RegisterServicesFromAssembly(typeof(CreatePasteCommand).Assembly));
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+
+
+app.UseExceptionHandler();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Pastebin.Persistence\Pastebin.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>
