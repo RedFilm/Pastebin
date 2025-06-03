@@ -1,0 +1,6 @@
+@Pastebin.API_HostAddress = http://localhost:5201
+
+GET {{Pastebin.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

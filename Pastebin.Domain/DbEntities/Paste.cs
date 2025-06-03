@@ -1,0 +1,13 @@
+﻿namespace Pastebin.Domain.DbEntities
+{
+	public class Paste
+	{
+		public long Id { get; set; }
+        public Guid UserId { get; set; }
+
+        public string? PastePath { get; set; }
+
+        public DateTimeOffset CreationDate { get; set; }
+        public DateTimeOffset ExpirationDate { get; set; }
+    }
+}
