@@ -9,7 +9,9 @@ namespace Pastebin.Persistence.Configurations
 		{
 			builder.HasKey(x => x.Id);
 
-			builder.Property(x => x.PastePath).HasMaxLength(64);
+			builder.Property(x => x.UrlHash)
+				.HasMaxLength(8);
+			builder.HasIndex(x => x.UrlHash).IsUnique();
 		}
 	}
 }
