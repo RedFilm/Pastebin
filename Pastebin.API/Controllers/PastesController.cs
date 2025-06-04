@@ -1,13 +1,17 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Pastebin.API.Attributes.Swagger;
+using Pastebin.API.Models;
 using Pastebin.Application.CQRS.Commands;
 using Pastebin.Application.CQRS.Queries;
+using Pastebin.Domain.DbEntities;
 
 
 namespace Pastebin.API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[BaseProducesResponseType(typeof(ExceptionResponseModel))]
 	public class PastesController : ControllerBase
 	{
 		private readonly IMediator _mediator;
@@ -21,6 +25,7 @@ namespace Pastebin.API.Controllers
 		}
 
 		[HttpGet("{hashUrl}")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Paste))]
 		public async Task<IActionResult> GetPaste(string hashUrl)
 		{
 			var paste = await _mediator.Send(new GetPasteByUrlHashQuery(hashUrl));
@@ -28,6 +33,11 @@ namespace Pastebin.API.Controllers
 		}
 
 		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+		[BaseProducesResponseType(typeof(ExceptionResponseModel),
+			StatusCodes.Status400BadRequest,
+			StatusCodes.Status409Conflict,
+			StatusCodes.Status500InternalServerError)]
 		public async Task<IActionResult> CreatePaste([FromBody] CreatePasteCommand command)
 		{
 			var urlHash = await _mediator.Send(command);
@@ -42,6 +52,8 @@ namespace Pastebin.API.Controllers
 
 
 		[HttpDelete("{id}")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+
 		public async Task<IActionResult> DeletePaste(long id, [FromHeader] Guid authorId)
 		{
 			await _mediator.Send(new DeletePasteCommand(id, authorId));
@@ -50,6 +62,7 @@ namespace Pastebin.API.Controllers
 
 
 		[HttpPatch("{id}")]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		public async Task<IActionResult> UpdatePaste( long id, 
 			[FromBody] UpdatePasteCommand command,
 			[FromHeader] Guid authorId)
