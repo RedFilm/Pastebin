@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pastebin.Domain.DbEntities;
-using Pastebin.Persistence.Configurations;
+using Pastebin.Persistence.Postgress.Configurations;
 
 namespace Pastebin.Persistence
 {
-	public class PastebinDbContext : DbContext
+    public class PastebinDbContext : DbContext
 	{
 		public PastebinDbContext(DbContextOptions<PastebinDbContext> options) : base (options)
 		{

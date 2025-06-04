@@ -1,7 +1,7 @@
 using Pastebin.API.Filters;
 using Pastebin.API.Handlers;
 using Pastebin.Application.CQRS.Commands;
-using Pastebin.Persistence.DependencyInjection;
+using Pastebin.Persistence.Postgress.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
