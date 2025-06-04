@@ -1,3 +1,4 @@
+using Pastebin.API.Filters;
 using Pastebin.API.Handlers;
 using Pastebin.Application.CQRS.Commands;
 using Pastebin.Persistence.DependencyInjection;
@@ -16,6 +17,11 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSwaggerGen(c =>
+{
+	c.OperationFilter<BaseProducesResponseTypeFilter>();
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

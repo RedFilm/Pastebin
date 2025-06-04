@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pastebin.Application", "Pas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pastebin.Persistence", "Pastebin.Persistence\Pastebin.Persistence.csproj", "{FD0A08B8-43BD-4B29-A03C-147CE7CB83D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pastebin.API", "Pastebin.API\Pastebin.API.csproj", "{73A02BB6-C83C-4DB6-9851-730DA0D0D289}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pastebin.API", "Pastebin.API\Pastebin.API.csproj", "{73A02BB6-C83C-4DB6-9851-730DA0D0D289}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
