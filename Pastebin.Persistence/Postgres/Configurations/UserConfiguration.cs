@@ -4,18 +4,17 @@ using Pastebin.Domain.DbEntities;
 
 namespace Pastebin.Persistence.Postgress.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+	public class UserConfiguration : IEntityTypeConfiguration<User>
 	{
-        public void Configure(EntityTypeBuilder<User> builder) 
-        {
-            builder.HasKey(x => x.Id);
+		public void Configure(EntityTypeBuilder<User> builder)
+		{
+			builder.HasKey(x => x.Id);
 
-            builder.HasMany<Paste>()
-            .WithOne()
-            .HasForeignKey(paste => paste.Id)
-            .HasPrincipalKey(user => user.Id);
+			builder.HasMany(u => u.Pastes)
+				.WithOne(p => p.User)
+				.HasForeignKey(paste => paste.UserId);
 
-            builder.Property(x => x.UserName).HasMaxLength(64);
-        }
-    }
+			builder.Property(x => x.UserName).HasMaxLength(64);
+		}
+	}
 }

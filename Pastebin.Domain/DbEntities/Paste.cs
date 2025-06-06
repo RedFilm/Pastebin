@@ -10,5 +10,7 @@
 
         public DateTimeOffset CreationDate { get; set; }
         public DateTimeOffset ExpirationDate { get; set; }
+
+        public virtual User User { get; set; } = null!;
     }
 }
