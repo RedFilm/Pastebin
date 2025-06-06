@@ -5,7 +5,7 @@
 		public long Id { get; set; }
         public Guid UserId { get; set; }
 
-        public string BucketKey { get; set; } = string.Empty;
+        public string ContentPath { get; set; } = string.Empty;
         public string? UrlHash { get; set; }
 
         public DateTimeOffset CreationDate { get; set; }
