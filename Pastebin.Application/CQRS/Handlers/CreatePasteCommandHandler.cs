@@ -1,18 +1,27 @@
 ﻿using MediatR;
 using Pastebin.Application.CQRS.Commands;
-using Pastebin.Application.Helpers;
 using Pastebin.Domain.DbEntities;
 using Pastebin.Domain.Exceptions;
 using Pastebin.Domain.Interfaces.Repository;
+using Pastebin.Persistence.MinioStorage;
+using Pastebin.Persistence.MinioStorage.Helpers;
+using Pastebin.Persistence.MinioStorage.Models;
+using System.Text;
 
 namespace Pastebin.Application.CQRS.Handlers
 {
 	public class CreatePasteCommandHandler : IRequestHandler<CreatePasteCommand, string>
 	{
+		private const string BucketName = "text-content-bucket";
+		private const string ContentType = "text/plain";
+
+		private readonly IMinioStorageClient _minioStorageClient;
 		private readonly IPasteRepository _pasteRepository;
 
-		public CreatePasteCommandHandler(IPasteRepository repository)
+		public CreatePasteCommandHandler(IMinioStorageClient minioStorageClient,
+			IPasteRepository repository)
 		{
+			_minioStorageClient = minioStorageClient;
 			_pasteRepository = repository;
 		}
 
@@ -32,11 +41,25 @@ namespace Pastebin.Application.CQRS.Handlers
 			if (urlHash == string.Empty)
 				urlHash = GenerateHashAsync();
 
+			var authorId = request.AuthorId;
+			var textBytes = Encoding.UTF8.GetBytes(request.Content);
+			using var stream = new MemoryStream(textBytes);
+
+			var minioObjContent = new MinioObjectContent
+			{
+				Metadata = new MinioObjectMetadata { BucketName = BucketName, ObjectName =  urlHash, Prefix = authorId.ToString() },
+				ContentType = ContentType,
+				Stream = stream
+			};
+
+			await _minioStorageClient.CreateObjectAsync(minioObjContent);
+
+			var contentPath = string.Concat(BucketName, MinioPathHelper.GetMinioObjectPath(urlHash, authorId.ToString()));
 			var paste = new Paste
 			{
 				UrlHash = urlHash,
 				UserId = request.AuthorId,
-				BucketKey = S3StorageHelper.GetS3BucketName(urlHash),
+				ContentPath = contentPath,
 				CreationDate = DateTime.UtcNow,
 				ExpirationDate = DateTimeOffset.UtcNow.AddDays(request.LifeTime.Day),
 			};

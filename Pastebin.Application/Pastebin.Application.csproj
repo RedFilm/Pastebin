@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pastebin.Domain\Pastebin.Domain.csproj" />
+    <ProjectReference Include="..\Pastebin.Persistence\Pastebin.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
