@@ -1,6 +1,7 @@
 using Pastebin.API.Filters;
 using Pastebin.API.Handlers;
 using Pastebin.Application.CQRS.Commands;
+using Pastebin.Persistence.MinioStorage.DependencyInjection;
 using Pastebin.Persistence.Postgress.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
+
+builder.Services.AddMinio(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 
