@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pastebin.Domain.DbEntities;
 using Pastebin.Domain.Interfaces.Repository;
+using Pastebin.Persistence.Postgres;
 
 namespace Pastebin.Persistence.Postgress.Repository
 {

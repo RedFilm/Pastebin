@@ -2,7 +2,7 @@
 using Pastebin.Domain.DbEntities;
 using Pastebin.Persistence.Postgress.Configurations;
 
-namespace Pastebin.Persistence
+namespace Pastebin.Persistence.Postgres
 {
     public class PastebinDbContext : DbContext
 	{

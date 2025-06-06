@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pastebin.Domain.Interfaces.Repository;
+using Pastebin.Persistence.Postgres;
 using Pastebin.Persistence.Postgress.Repository;
 
 namespace Pastebin.Persistence.Postgress.DependencyInjection
