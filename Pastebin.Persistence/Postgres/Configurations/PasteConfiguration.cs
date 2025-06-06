@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pastebin.Domain.DbEntities;
 
 namespace Pastebin.Persistence.Postgress.Configurations
 {
-    public class PasteConfiguration
+    public class PasteConfiguration : IEntityTypeConfiguration<Paste>
     {
         public void Configure(EntityTypeBuilder<Paste> builder)
         {
