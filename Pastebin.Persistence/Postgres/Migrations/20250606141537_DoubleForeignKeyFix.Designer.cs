@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Pastebin.Persistence;
 using Pastebin.Persistence.Postgres;
 
 #nullable disable
@@ -13,8 +12,8 @@ using Pastebin.Persistence.Postgres;
 namespace Pastebin.Persistence.Migrations
 {
     [DbContext(typeof(PastebinDbContext))]
-    [Migration("20250603192914_ChangePasteModel")]
-    partial class ChangePasteModel
+    [Migration("20250606141537_DoubleForeignKeyFix")]
+    partial class DoubleForeignKeyFix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +33,7 @@ namespace Pastebin.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("BucketKey")
+                    b.Property<string>("ContentPath")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -45,12 +44,16 @@ namespace Pastebin.Persistence.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UrlHash")
-                        .HasColumnType("text");
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UrlHash")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -64,7 +67,8 @@ namespace Pastebin.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("text");
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.HasKey("Id");
 
@@ -73,11 +77,13 @@ namespace Pastebin.Persistence.Migrations
 
             modelBuilder.Entity("Pastebin.Domain.DbEntities.Paste", b =>
                 {
-                    b.HasOne("Pastebin.Domain.DbEntities.User", null)
+                    b.HasOne("Pastebin.Domain.DbEntities.User", "User")
                         .WithMany("Pastes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Pastebin.Domain.DbEntities.User", b =>
