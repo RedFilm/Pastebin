@@ -52,7 +52,7 @@ namespace Pastebin.Application.CQRS.Handlers
 				Stream = stream
 			};
 
-			await _minioStorageClient.CreateObjectAsync(minioObjContent);
+			await _minioStorageClient.CreateObjectAsync(minioObjContent, ct);
 
 			var contentPath = string.Concat(BucketName, MinioPathHelper.GetMinioObjectPath(urlHash, authorId.ToString()));
 			var paste = new Paste

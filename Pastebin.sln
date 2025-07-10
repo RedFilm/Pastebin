@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pastebin.Persistence", "Pas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pastebin.API", "Pastebin.API\Pastebin.API.csproj", "{73A02BB6-C83C-4DB6-9851-730DA0D0D289}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiService", "ApiService", "{CA3AB44F-8E35-42FF-9AFB-A7C3966F546C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E4DB98AE-1EEB-4B87-8A2B-AD92B0B23174} = {CA3AB44F-8E35-42FF-9AFB-A7C3966F546C}
+		{691CD3EC-42AE-4355-B378-CBF2AD895CA7} = {CA3AB44F-8E35-42FF-9AFB-A7C3966F546C}
+		{FD0A08B8-43BD-4B29-A03C-147CE7CB83D6} = {CA3AB44F-8E35-42FF-9AFB-A7C3966F546C}
+		{73A02BB6-C83C-4DB6-9851-730DA0D0D289} = {CA3AB44F-8E35-42FF-9AFB-A7C3966F546C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EF6FFFFF-C10F-40AD-B4CF-68B2ADCB7CA3}
